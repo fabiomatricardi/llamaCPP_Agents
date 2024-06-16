@@ -3,6 +3,8 @@ Run AI agents with llama-cpp-agents locally
 
 source here: https://llama-cpp-agent.readthedocs.io/en/latest/sequential_chain/
 
+<img src='https://github.com/fabiomatricardi/llamaCPP_Agents/raw/main/logo.png' height=300>
+
 ## Install dependencies
 ```
 pip install llama-cpp-agent rich
