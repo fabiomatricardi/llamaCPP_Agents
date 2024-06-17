@@ -50,3 +50,20 @@ llama server listening at http://192.168.2.6:8080
 ```
 
 
+# Bind a langchain openAI compatible call
+references:
+- https://python.langchain.com/v0.2/docs/integrations/chat/openai/
+- https://python.langchain.com/v0.2/docs/integrations/chat/llamacpp/
+
+Using llamafile with qwen
+```
+.\llamafile-0.8.6.exe -m qwen1_5-0_5b-chat-q8_0.gguf --host 0.0.0.0 -c 8192
+```
+
+In another terminal run
+```
+.\python3117pipReady\python.exe .\testapi.py
+```
+
+
+
