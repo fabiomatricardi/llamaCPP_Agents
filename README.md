@@ -66,4 +66,42 @@ In another terminal run
 ```
 
 
+# Retrieve Langchain Documents from Web search
+### this strategy uses DuckDuckGo Langchain wrapper and Newspaper3k: Article scraping & curation
+- https://api.python.langchain.com/en/latest/utilities/langchain_community.utilities.duckduckgo_search.DuckDuckGoSearchAPIWrapper.html#
+- https://github.com/codelucas/newspaper
+
+> works with Python 3.11+
+```
+pip install --upgrade langchain langchain-community faiss-cpu tiktoken duckduckgo-search llama-cpp-agent rich colorama mesop newspaper3k easygui lxml_html_clean
+```
+
+### Create the Documents with LangChain Document Scheme
+```
+python .\testDDG-news3k.py
+```
+User is requested to input the Query search
+- DDG will return 5 snippets
+- Newspaper3k will use the links from the Wrapper results and return the scraped webpages
+- List of LangChain Documents will be generated and saved into a pickle file
+
+Langchain document scheme
+```
+docdocs.append(Document(page_content = article.text, metadata = {
+    'source': items["link"],
+    'title': items["title"],
+    'snippet': items["snippet"],
+    'author':article.authors})) 
+```
+
+To read the document saved run
+```
+python .\Loadpickle.py
+```
+
+
+
+
+
+
 
