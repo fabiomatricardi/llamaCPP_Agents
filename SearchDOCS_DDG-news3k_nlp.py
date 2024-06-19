@@ -1,4 +1,6 @@
-from tqdm.rich import trange, tqdm
+
+# Updated 20240619 Shanghai Time 14:00
+
 from rich.markdown import Markdown
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -25,59 +27,49 @@ research = console.input(f'[bright_green]> ')
 console.print(90*'=')
 rawdb = wrapper.results(research,max_results=5)
 
-"""
-for items in rawdb:
-    console.print(f'[bold red1]Title: [red1]{items["title"]}')
-    console.print(f'[bold orange1]Snippet: [orange1]{items["snippet"]}')
-    console.print(f'[bold grey100]Link: [grey100]{items["link"]}')
-    console.print(90*'-')
-console.print('\n\n\n')
-"""
-
-
 docdocs = []
+st = 1
+numofdocs = len(rawdb)
 for items in rawdb:
     url = items["link"]
-    try:
+    try:  #useful if the url is no reachable
         article = Article(url)
         article.download()
         article.parse()
         article.nlp()
-        console.print(article)
-        console.rule()
-        console.print(f'[bold red1]Title: [red1]{items["title"]}')
-        console.print(f'[bold orange1]Snippet: [orange1]{items["snippet"]}')
-        console.print(f'[bold grey100]Link: [grey100]{items["link"]}')
-        console.print('---')
-        console.print(article.summary)
-        console.print('---')
-        if article.text == '':
-            #console.print(article)
-            console.print(items["snippet"])
-            console.print(f'[bold bright_green]Keywords: [bright_green]{article.meta_keywords} {article.keywords}')
+        kw = []
+        #we merge nltk keywords and meta webpage keywords
+        for i in article.keywords+article.meta_keywords:
+          if i == '': #no blck yeywords for us
+            pass
+          else:
+            kw.append(i)
+        if article.text == '': #sometimes there is no text to parse. so we use the snippet
             docdocs.append(Document(page_content = items["snippet"], metadata = {
                 'source': items["link"],
                 'title': items["title"],
-                'snippet': article.meta_description,
-                'image': article.meta_img,
-                'meta_keywords': article.meta_keywords,
+                'snippet': items["snippet"],
                 'author':article.authors,
-                'keywords':article.keywords,
-                'summary':article.summary}))              
+                'keywords':kw,
+                'meta_description':article.meta_description,
+                'meta_img':article.meta_img,
+                'top_image':article.top_image,
+                'publish_date':article.publish_date,
+                'summary':article.summary}))
         else:
-            #console.print(article)
-            console.print(article.text.replace('\n\n',''))
-            console.print(f'[bold bright_green]Keywords: [bright_green]{article.meta_keywords} {article.keywords}')
             docdocs.append(Document(page_content = article.text.replace('\n\n',''), metadata = {
                 'source': items["link"],
                 'title': items["title"],
-                'snippet': article.meta_description,
-                'image': article.meta_img,
-                'meta_keywords': article.meta_keywords,
+                'snippet': items["snippet"],
                 'author':article.authors,
-                'keywords':article.keywords,
-                'summary':article.summary}))                        
-        console.print(90*'-')    
+                'keywords':kw,
+                'meta_description':article.meta_description,
+                'meta_img':article.meta_img,
+                'top_image':article.top_image,
+                'publish_date':article.publish_date,
+                'summary':article.summary}))
+        console.print(f'Prepared Ducment n.{st} out of {numofdocs}')
+        st +=1      
     except:
         pass
 ## SAVE IN PICKLE THE DOCUMENTS SET WITH METADATA
