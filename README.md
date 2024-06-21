@@ -3,7 +3,7 @@ Run AI agents with llama-cpp-agents locally
 
 source here: https://llama-cpp-agent.readthedocs.io/en/latest/sequential_chain/
 
-<img src='https://github.com/fabiomatricardi/llamaCPP_Agents/raw/main/logo.png' height=300>
+<img src='https://github.com/fabiomatricardi/llamaCPP_Agents/raw/main/sociallogo.png' height=300>
 
 ## Install dependencies
 ```
@@ -46,7 +46,7 @@ llama server listening at http://192.168.2.6:8080
 
 ## Run the python file
 ```
-.\python.exe .\productlaunch.py
+.\python.exe .\plaunch.py
 ```
 
 
